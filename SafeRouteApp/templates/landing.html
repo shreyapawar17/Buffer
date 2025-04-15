@@ -9,17 +9,17 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #fce4ec, #fff1f8); /* Soft pink gradient */
+            background: linear-gradient(135deg, #f0f2f0, #e0f2f7); /* Light and calming gradient */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            color: #333;
+            color: #333; /* Dark grey text */
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
@@ -28,7 +28,7 @@
         }
 
         h1 {
-            color: #e91e63; /* Vibrant pink */
+            color: #e91e63; /* Pink/Magenta - strong and feminine */
             font-size: 2.8em;
             margin-bottom: 15px;
             letter-spacing: 1px;
@@ -41,7 +41,7 @@
         }
 
         .cta-button {
-            background-color: #007bff; /* Primary blue */
+            background-color: #4CAF50; /* Green - for safety and go */
             color: white;
             border: none;
             padding: 15px 30px;
@@ -56,39 +56,38 @@
         }
 
         .cta-button:hover {
-            background-color: #0056b3;
+            background-color: #388E3C;
         }
 
         .app-icon {
             font-size: 3em;
             color: #e91e63;
             margin-bottom: 20px;
+            /* You can replace the text icon with an actual image */
         }
 
-        /* Subtle animation */
+        /* Subtle animation on load */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            animation: fadeInUp 0.5s ease-out;
+            animation: fadeInUp 0.6s ease-out;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="app-icon">
-            <i class="fas fa-shield-alt"></i>
-        </div>
+            <i class="fas fa-shield-alt"></i> </div>
         <h1>Welcome to Nirbhay Nari</h1>
-        <p class="slogan">The Power to Be Fearless, The Right to Be Safe.</p>
-        <button onclick="window.location.href='/permissions'" class="cta-button">
+        <p>Your trusted companion for safety and security. Let's get started.</p>
+        <a href="/permissions" class="cta-button">
             <i class="fas fa-arrow-right"></i> Proceed
-        </button>
+        </a>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha512-yFjLbHHugv1yRqHc7iFCSzu0Klnc9l7ntflibdQPIAT/SD+PbywCc2DbshJkhnUrEpCB6TwYhGUjhlKH6AYpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
-

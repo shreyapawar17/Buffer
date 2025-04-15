@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SOS</title>
+</head>
+<body>
+    <h1>SOS Feature</h1>
+    <p>Speak the SOS word ("Help", "Danger", etc.)</p>
+    <button id="start-listening">Simulate Start Listening for SOS</button>
+    <p id="sos-status"></p>
+
+    <script>
+        document.getElementById('start-listening').addEventListener('click', () => {
+            document.getElementById('sos-status').textContent = 'Simulating Listening...';
+            // **Important:** This is a simulation for the frontend.
+            // Real speech recognition would involve browser APIs or backend processing.
+            setTimeout(() => {
+                const spokenWord = prompt("Simulate spoken word (e.g., Help, Stop):");
+                if (spokenWord) {
+                    fetch('/sos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 'spoken_word': spokenWord }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('sos-status').textContent = data.message;
+                        if (data.is_sos_active) {
+                            alert('SOS Triggered!');
+                            // Optionally update UI to show tracking status
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('sos-status').textContent = 'Error processing SOS.';
+                    });
+                } else {
+                    document.getElementById('sos-status').textContent = 'Not listening.';
+                }
+            }, 2000); // Simulate listening for 2 seconds
+        });
+    </script>
+</body>
+</html>
