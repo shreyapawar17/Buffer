@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_637aedbc1059df49553e1c9d6235a615 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_637aedbc1059df49553e1c9d6235a615" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_637aedbc1059df49553e1c9d6235a615 = L.map(
+                "map_637aedbc1059df49553e1c9d6235a615",
+                {
+                    center: [18.5213738, 73.8545071],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e7e47339e9e2ad811f222d53089d236d = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e7e47339e9e2ad811f222d53089d236d.addTo(map_637aedbc1059df49553e1c9d6235a615);
+        
+    
+            var marker_5a702f664e23bf977ce6b349cf927f51 = L.marker(
+                [18.5213738, 73.8545071],
+                {
+}
+            ).addTo(map_637aedbc1059df49553e1c9d6235a615);
+        
+    
+            var icon_e251479995913e325247323a47da0027 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f565c7f9da3576c47da24743ca85d4e3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5e83c6bac058d8cf02af460203a26b31 = $(`<div id="html_5e83c6bac058d8cf02af460203a26b31" style="width: 100.0%; height: 100.0%;">Your Location</div>`)[0];
+                popup_f565c7f9da3576c47da24743ca85d4e3.setContent(html_5e83c6bac058d8cf02af460203a26b31);
+            
+        
+
+        marker_5a702f664e23bf977ce6b349cf927f51.bindPopup(popup_f565c7f9da3576c47da24743ca85d4e3)
+        ;
+
+        
+    
+    
+                marker_5a702f664e23bf977ce6b349cf927f51.setIcon(icon_e251479995913e325247323a47da0027);
+            
+    
+            var feature_group_cd675665a82b1b1334d7ca3f8f795bad = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_28c861a12166721f81b60ad2e28b1989 = L.marker(
+                [18.5178, 73.8441],
+                {
+}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            var icon_c538acf9dbdacbecbb588c38262b0675 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_feb0f52637f258b127426a7157e90251 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_633d579f1115720026de15a7d5c0ea44 = $(`<div id="html_633d579f1115720026de15a7d5c0ea44" style="width: 100.0%; height: 100.0%;"><b>Deccan Gymkhana Police Station</b><br>Contact: 020-25652222</div>`)[0];
+                popup_feb0f52637f258b127426a7157e90251.setContent(html_633d579f1115720026de15a7d5c0ea44);
+            
+        
+
+        marker_28c861a12166721f81b60ad2e28b1989.bindPopup(popup_feb0f52637f258b127426a7157e90251)
+        ;
+
+        
+    
+    
+                marker_28c861a12166721f81b60ad2e28b1989.setIcon(icon_c538acf9dbdacbecbb588c38262b0675);
+            
+    
+            var circle_marker_931cd80d8e7d2b41fe1687e158fbe99a = L.circleMarker(
+                [18.5178, 73.8441],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            circle_marker_931cd80d8e7d2b41fe1687e158fbe99a.bindTooltip(
+                `<div>
+                     Approx. 1.17 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3fc23257c5167ea7a42b9ba133b534f6 = L.marker(
+                [18.5387, 73.8573],
+                {
+}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            var icon_f9ad95749bc32296e0fc7081710d5c8e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0666ec55d26016b52d2cd84c08f34464 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3255c5ce69292040048ac38199aa2ac7 = $(`<div id="html_3255c5ce69292040048ac38199aa2ac7" style="width: 100.0%; height: 100.0%;"><b>Shivajinagar Police Station</b><br>Contact: 020-25511111</div>`)[0];
+                popup_0666ec55d26016b52d2cd84c08f34464.setContent(html_3255c5ce69292040048ac38199aa2ac7);
+            
+        
+
+        marker_3fc23257c5167ea7a42b9ba133b534f6.bindPopup(popup_0666ec55d26016b52d2cd84c08f34464)
+        ;
+
+        
+    
+    
+                marker_3fc23257c5167ea7a42b9ba133b534f6.setIcon(icon_f9ad95749bc32296e0fc7081710d5c8e);
+            
+    
+            var circle_marker_7048116b241ec389fafffddb87280e24 = L.circleMarker(
+                [18.5387, 73.8573],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            circle_marker_7048116b241ec389fafffddb87280e24.bindTooltip(
+                `<div>
+                     Approx. 1.94 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_47a46f242bd86ef9b9e624f1e7bad2ef = L.marker(
+                [18.5033, 73.8601],
+                {
+}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            var icon_786c7f1bc29025361c5dfcbb8d1a794b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7e9fa0db3f9aa8e41eb37e8d60e6a4e0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb979e582e2b3023caa8e3cdb0bf5882 = $(`<div id="html_cb979e582e2b3023caa8e3cdb0bf5882" style="width: 100.0%; height: 100.0%;"><b>Swargate Police Station</b><br>Contact: 020-24453333</div>`)[0];
+                popup_7e9fa0db3f9aa8e41eb37e8d60e6a4e0.setContent(html_cb979e582e2b3023caa8e3cdb0bf5882);
+            
+        
+
+        marker_47a46f242bd86ef9b9e624f1e7bad2ef.bindPopup(popup_7e9fa0db3f9aa8e41eb37e8d60e6a4e0)
+        ;
+
+        
+    
+    
+                marker_47a46f242bd86ef9b9e624f1e7bad2ef.setIcon(icon_786c7f1bc29025361c5dfcbb8d1a794b);
+            
+    
+            var circle_marker_b6d2f161c4e1ddc077c52c5c9cbcdd1c = L.circleMarker(
+                [18.5033, 73.8601],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_cd675665a82b1b1334d7ca3f8f795bad);
+        
+    
+            circle_marker_b6d2f161c4e1ddc077c52c5c9cbcdd1c.bindTooltip(
+                `<div>
+                     Approx. 2.09 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_cd675665a82b1b1334d7ca3f8f795bad.addTo(map_637aedbc1059df49553e1c9d6235a615);
+        
+    
+            var feature_group_dab1be4a471bf0d584602d2dfb4b7756 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_9c73d1d9ffe2c0cacc7da3992c471551 = L.marker(
+                [18.5204, 73.8567],
+                {
+}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            var icon_58fa128cb5d8c5a554f596a0e262a6a6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8260362ae4c7970d29c9e112311b9439 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2fa553a3f01dbcacda925f0f79569c9a = $(`<div id="html_2fa553a3f01dbcacda925f0f79569c9a" style="width: 100.0%; height: 100.0%;">Bharosa Cell</div>`)[0];
+                popup_8260362ae4c7970d29c9e112311b9439.setContent(html_2fa553a3f01dbcacda925f0f79569c9a);
+            
+        
+
+        marker_9c73d1d9ffe2c0cacc7da3992c471551.bindPopup(popup_8260362ae4c7970d29c9e112311b9439)
+        ;
+
+        
+    
+    
+                marker_9c73d1d9ffe2c0cacc7da3992c471551.setIcon(icon_58fa128cb5d8c5a554f596a0e262a6a6);
+            
+    
+            var circle_marker_d5332090f29cd8593b65cbc566e12fda = L.circleMarker(
+                [18.5204, 73.8567],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            circle_marker_d5332090f29cd8593b65cbc566e12fda.bindTooltip(
+                `<div>
+                     Approx. 0.26 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c4337458c182365d335028e9af82c93d = L.marker(
+                [18.5132, 73.8552],
+                {
+}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            var icon_19ad921d8690a1f18922d80bb55e31d2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5e6bf3ea2fbdceec78b4d08e49984901 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f9196add67c8ce5f9788a2cc461a4b55 = $(`<div id="html_f9196add67c8ce5f9788a2cc461a4b55" style="width: 100.0%; height: 100.0%;">Swayam Siddha Mahila Manch</div>`)[0];
+                popup_5e6bf3ea2fbdceec78b4d08e49984901.setContent(html_f9196add67c8ce5f9788a2cc461a4b55);
+            
+        
+
+        marker_c4337458c182365d335028e9af82c93d.bindPopup(popup_5e6bf3ea2fbdceec78b4d08e49984901)
+        ;
+
+        
+    
+    
+                marker_c4337458c182365d335028e9af82c93d.setIcon(icon_19ad921d8690a1f18922d80bb55e31d2);
+            
+    
+            var circle_marker_7b197dbdc26c4494d16c977fac5df86e = L.circleMarker(
+                [18.5132, 73.8552],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            circle_marker_7b197dbdc26c4494d16c977fac5df86e.bindTooltip(
+                `<div>
+                     Approx. 0.91 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2b973e63e81f49213d2541eb6520b9f5 = L.marker(
+                [18.5356, 73.8723],
+                {
+}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            var icon_245982dbfdd1140a62037866f745704c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ff5bf3b4a0f0e862db51f7289ca87a52 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_38619a298eb4b218f1a45c102aabffac = $(`<div id="html_38619a298eb4b218f1a45c102aabffac" style="width: 100.0%; height: 100.0%;">Aadhar Mahila Mandal</div>`)[0];
+                popup_ff5bf3b4a0f0e862db51f7289ca87a52.setContent(html_38619a298eb4b218f1a45c102aabffac);
+            
+        
+
+        marker_2b973e63e81f49213d2541eb6520b9f5.bindPopup(popup_ff5bf3b4a0f0e862db51f7289ca87a52)
+        ;
+
+        
+    
+    
+                marker_2b973e63e81f49213d2541eb6520b9f5.setIcon(icon_245982dbfdd1140a62037866f745704c);
+            
+    
+            var circle_marker_67b1ef6a932616c5c1f56aabe144c2a0 = L.circleMarker(
+                [18.5356, 73.8723],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_dab1be4a471bf0d584602d2dfb4b7756);
+        
+    
+            circle_marker_67b1ef6a932616c5c1f56aabe144c2a0.bindTooltip(
+                `<div>
+                     Approx. 2.45 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_dab1be4a471bf0d584602d2dfb4b7756.addTo(map_637aedbc1059df49553e1c9d6235a615);
+        
+    
+            var feature_group_e8187e9efc7e82274b2826772731b927 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_975b53002f04275a6a30ce71f0c81aa9 = L.marker(
+                [18.525, 73.86],
+                {
+}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            var icon_58b439863471d8bd3eedea1192fd2e8c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3a1de30bf9c5df38a478d3cf0ae36f9d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d8f08cc73f4b0592b0ec53c48d0a5d36 = $(`<div id="html_d8f08cc73f4b0592b0ec53c48d0a5d36" style="width: 100.0%; height: 100.0%;"><b>Family Member 1</b><br>Contact: 9876543210</div>`)[0];
+                popup_3a1de30bf9c5df38a478d3cf0ae36f9d.setContent(html_d8f08cc73f4b0592b0ec53c48d0a5d36);
+            
+        
+
+        marker_975b53002f04275a6a30ce71f0c81aa9.bindPopup(popup_3a1de30bf9c5df38a478d3cf0ae36f9d)
+        ;
+
+        
+    
+    
+                marker_975b53002f04275a6a30ce71f0c81aa9.setIcon(icon_58b439863471d8bd3eedea1192fd2e8c);
+            
+    
+            var circle_marker_63f021094ebc49cf2863ccf31f8d5a06 = L.circleMarker(
+                [18.525, 73.86],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            circle_marker_63f021094ebc49cf2863ccf31f8d5a06.bindTooltip(
+                `<div>
+                     Approx. 0.71 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ab86ddd2d196def7f3b08408380e9e0e = L.marker(
+                [18.515, 73.85],
+                {
+}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            var icon_e50274c4f038df150755394f1812e9ce = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e5f318ddc0ec0a8f849aaa1b2a0c328a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a1492d18bc902fd851636960e1bc1c04 = $(`<div id="html_a1492d18bc902fd851636960e1bc1c04" style="width: 100.0%; height: 100.0%;"><b>Friend 1</b><br>Contact: 8765432109</div>`)[0];
+                popup_e5f318ddc0ec0a8f849aaa1b2a0c328a.setContent(html_a1492d18bc902fd851636960e1bc1c04);
+            
+        
+
+        marker_ab86ddd2d196def7f3b08408380e9e0e.bindPopup(popup_e5f318ddc0ec0a8f849aaa1b2a0c328a)
+        ;
+
+        
+    
+    
+                marker_ab86ddd2d196def7f3b08408380e9e0e.setIcon(icon_e50274c4f038df150755394f1812e9ce);
+            
+    
+            var circle_marker_6d22b37feda807fa1976106c7589b30f = L.circleMarker(
+                [18.515, 73.85],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            circle_marker_6d22b37feda807fa1976106c7589b30f.bindTooltip(
+                `<div>
+                     Approx. 0.85 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a89aa559283ccb040df575c99fa4b92e = L.marker(
+                [18.53, 73.87],
+                {
+}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            var icon_70837fe6bf45ca3f48af8c773d24fcc2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_218d309e6dad367f26c9b44868534cdb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_efe63b11416a256a16ae6215072786a8 = $(`<div id="html_efe63b11416a256a16ae6215072786a8" style="width: 100.0%; height: 100.0%;"><b>Friend 2</b><br>Contact: 7654321098</div>`)[0];
+                popup_218d309e6dad367f26c9b44868534cdb.setContent(html_efe63b11416a256a16ae6215072786a8);
+            
+        
+
+        marker_a89aa559283ccb040df575c99fa4b92e.bindPopup(popup_218d309e6dad367f26c9b44868534cdb)
+        ;
+
+        
+    
+    
+                marker_a89aa559283ccb040df575c99fa4b92e.setIcon(icon_70837fe6bf45ca3f48af8c773d24fcc2);
+            
+    
+            var circle_marker_a6210997469b431532ea10ea41a7a73a = L.circleMarker(
+                [18.53, 73.87],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e8187e9efc7e82274b2826772731b927);
+        
+    
+            circle_marker_a6210997469b431532ea10ea41a7a73a.bindTooltip(
+                `<div>
+                     Approx. 1.89 km away
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_e8187e9efc7e82274b2826772731b927.addTo(map_637aedbc1059df49553e1c9d6235a615);
+        
+    
+            var layer_control_e90040769e821bccbd7ab0e8f44cca47_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_e7e47339e9e2ad811f222d53089d236d,
+                },
+                overlays :  {
+                    "Nearest Police Stations" : feature_group_cd675665a82b1b1334d7ca3f8f795bad,
+                    "Nearest Women Help Centers" : feature_group_dab1be4a471bf0d584602d2dfb4b7756,
+                    "Nearest Trusted Contacts" : feature_group_e8187e9efc7e82274b2826772731b927,
+                },
+            };
+            let layer_control_e90040769e821bccbd7ab0e8f44cca47 = L.control.layers(
+                layer_control_e90040769e821bccbd7ab0e8f44cca47_layers.base_layers,
+                layer_control_e90040769e821bccbd7ab0e8f44cca47_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_637aedbc1059df49553e1c9d6235a615);
+
+        
+</script>
+</html>

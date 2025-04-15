@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Safest Route</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <style>
+        /* ... your CSS ... */
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #mapid { height: 70vh; width: 100%; }
+        #controls { padding: 20px; text-align: center; background-color: #f8f8f8; }
+        input[type=text] { padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-right: 10px; width: 60%; max-width: 300px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #route-info { margin-top: 15px; font-weight: bold; }
+        #mapid { width: 100%; height: 500px; } /* Ensure map div has dimensions */
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <h1>Safest Route</h1>
+        <p>Enter your destination:</p>
+        <form method="POST" action="/safest_route">
+            <input type="text" id="destination" name="destination" placeholder="Enter destination">
+            <button type="submit">Find Safest Route</button>
+        </form>
+        {% if route_info %}
+        <p id="route-info">{{ route_info }}</p>
+        {% endif %}
+    </div>
+    <div id="mapid">
+        {{ map_html|safe }}
+    </div>
+</body>
+</html>
