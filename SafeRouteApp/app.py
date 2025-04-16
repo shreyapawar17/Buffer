@@ -1,13 +1,24 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 import geopy.distance
+import string
 from geopy.geocoders import Nominatim
 import folium
+from datetime import datetime
 import networkx as nx
 from datetime import datetime
 from folium.plugins import HeatMap
 import heapq  # Import the heapq module
 import json # Import the json module
+from trie_sos import (
+    create_sos_detector,
+    detect_speech_and_alert,
+    track_location,
+    send_sos_alert,
+    get_current_location,
+    SOSWordDetector,
+    is_sos_active
+)
 
 app = Flask(__name__)
 
@@ -66,16 +77,66 @@ time_based_risk = {
 unsafe_reports = [
     {"lat": 18.5270, "lon": 73.8530, "intensity": 0.7, "description": "Dimly lit street"},
     {"lat": 18.5330, "lon": 73.8570, "intensity": 0.5, "description": "Isolated area at night"},
+    
+    {"lat": 18.5290, "lon": 73.8530, "intensity": 0.4, "description": "Occasional incidents reported"},
+    {"lat": 18.5600, "lon": 73.8000, "intensity": 0.7, "description": "Isolated area, reports of theft"},
+    {"lat": 18.6200, "lon": 73.8050, "intensity": 0.6, "description": "Late-night activity, poor visibility"},
+    {"lat": 18.5050, "lon": 73.9000, "intensity": 0.5, "description": "Construction area, limited lighting"},
+    {"lat": 18.6000, "lon": 73.7800, "intensity": 0.8, "description": "Dark alleys, reports of harassment"},
+    {"lat": 18.6500, "lon": 73.7500, "intensity": 0.7, "description": "Less populated area, occasional incidents"},
+    {"lat": 18.6300, "lon": 73.8300, "intensity": 0.6, "description": "Isolated park, reports of late night activities"},
+    {"lat": 18.5700, "lon": 73.8700, "intensity": 0.5, "description": "underpass, low lighting"},  
+    {"lat": 18.6800, "lon": 73.7800, "intensity": 0.6, "description": "Highway stretch, reports of speeding vehicles"}, # Ravet
+    {"lat": 18.6400, "lon": 73.8800, "intensity": 0.5, "description": "Riverbank area, dimly lit at night"}, # Alandi
+    {"lat": 18.5400, "lon": 73.9200, "intensity": 0.8, "description": "Remote outskirts, reports of robberies"}, # Wagholi
+    {"lat": 18.5500, "lon": 73.7600, "intensity": 0.6, "description": "Under construction metro area, poor lighting and construction hazards"}, # Balewadi
+    {"lat": 18.5000, "lon": 73.8800, "intensity": 0.7, "description": "Isolated park, late-night gatherings"},  # Hadapsar outskirts
+    {"lat": 18.4700, "lon": 73.8700, "intensity": 0.6, "description": "Construction area, poor lighting and pathways"},  # Undri
+    {"lat": 18.4500, "lon": 73.8500, "intensity": 0.5, "description": "Remote road, reports of speeding vehicles"},  # Kondhwa outskirts
+    {"lat": 18.4800, "lon": 73.9000, "intensity": 0.8, "description": "Dense forest area, limited visibility at night"}, # Mohammadwadi
+    {"lat": 18.4300, "lon": 73.8600, "intensity": 0.7, "description": "Isolated area, reports of theft and harassment"}, # Bibwewadi outskirts
+    {"lat": 18.4600, "lon": 73.8300, "intensity": 0.6, "description": "Underpass, dimly lit and less crowded"}, # Katraj
+    {"lat": 18.4900, "lon": 73.9200, "intensity": 0.5, "description": "Riverbank area, dimly lit and isolated"}, # Kharadi outskirts
+    {"lat": 18.4400, "lon": 73.8800, "intensity": 0.8, "description": "Hilly area, reports of robberies and less traffic"}, # Saswad road.
+    {"lat": 18.5270, "lon": 73.8400, "intensity": 0.7, "description": "Isolated alleyways, poor lighting and reports of petty crime"}, # Bhandarkar Road
 ]
 
 safe_spaces = [
+     {"name": "Tech Park Security Hub", "lat": 18.6250, "lon": 73.7950, "details": "Monitored area, security personnel present"},
+    {"name": "Residential Complex Guard Post", "lat": 18.5100, "lon": 73.8950, "details": "Gated community, guarded entrance"},
+    {"name": "Shopping Mall Security", "lat": 18.5900, "lon": 73.7750, "details": "Well-lit, security cameras and personnel"},
+    {"name": "24/7 Police Station", "lat": 18.6400, "lon": 73.7450, "details": "Police presence, emergency services"},
+    {"name": "School Campus Security", "lat": 18.6350, "lon": 73.8250, "details": "Guarded during school hours and after"},
+    {"name": "Railway Station Police Post", "lat": 18.5650, "lon": 73.8650, "details": "Always staffed, railway police presence"},
+    {"name": "Community Park Security", "lat": 18.5850, "lon": 73.7250, "details": "Patrolled park, security personnel present"}, # Pimple Saudagar park
+    {"name": "Toll Plaza Security", "lat": 18.6750, "lon": 73.7750, "details": "24/7 presence, highway patrol"}, # Ravet Toll
+    {"name": "Temple Security", "lat": 18.6350, "lon": 73.8750, "details": "Security personnel, CCTV surveillance"}, # Alandi temple area.
+    {"name": "Large Residential complex gate", "lat": 18.5450, "lon": 73.9150, "details": "Security at main gate, 24/7"}, # Wagholi residential
+    {"name": "Metro Station Security", "lat": 18.5550, "lon": 73.7550, "details": "Security staff, CCTV, well lit area"}, # Balewadi metro
+    {"name": "Balewadi High Street Security", "lat": 18.5530, "lon": 73.7800, "details": "Shopping and dining area, Security personnel, CCTV"},
+    {"name": "Karve Nagar Police Chowki", "lat": 18.5020, "lon": 73.8290, "details": "Police Chowki, Always on duty"},
+    {"name": "Karve Road Petrol Pump 24/7", "lat": 18.5060, "lon": 73.8320, "details": "Petrol Pump, 24/7, CCTV"},
+    {"name": "Bavdhan Residential Complex Gate", "lat": 18.5350, "lon": 73.7800, "details": "Gated Community, Security personnel"},
+    {"name": "Pashan Residential Complex Gate", "lat": 18.5400, "lon": 73.8050, "details": "Gated Community, Security personnel"},
+    {"name": "Community Center A", "lat": 18.5300, "lon": 73.8550, "details": "Open till 9 PM, security present"},
+    {"name": "Trusted Cafe B", "lat": 18.5180, "lon": 73.8450, "details": "Staff aware and helpful, well-lit area"},
+    {"name": "Police Chowki near Market", "lat": 18.5270, "lon": 73.8620, "details": "Always on duty"},
+    {"name": "24/7 Hospital Emergency", "lat": 18.5800, "lon": 73.8200, "details": "Round-the-clock medical assistance"},
+    {"name": "Residential Complex Security", "lat": 18.4950, "lon": 73.8850, "details": "Gated community, guarded entrance"},
+    {"name": "Shopping Mall Security", "lat": 18.4650, "lon": 73.8650, "details": "Well-lit, security cameras and personnel"},
+    {"name": "Police Station", "lat": 18.4450, "lon": 73.8450, "details": "Police presence, emergency services"},
+    {"name": "Community Park Security", "lat": 18.4850, "lon": 73.8950, "details": "Patrolled park, security personnel present"},
+    {"name": "24/7 Pharmacy", "lat": 18.4350, "lon": 73.8550, "details": "24/7 medical supplies and assistance"},
+    {"name": "Bus Depot Security", "lat": 18.4550, "lon": 73.8250, "details": "Security personnel, CCTV surveillance"},
+    {"name": "Riverfront Security", "lat": 18.4950, "lon": 73.9150, "details": "Patrolled riverfront area"},
+    {"name": "Highway Patrol", "lat": 18.4350, "lon": 73.8750, "details": "Highway patrol presence"},
     {"name": "Police Station", "lat": 18.5285, "lon": 73.8505, "details": "Always open"},
     {"name": "Well-lit Cafe", "lat": 18.5340, "lon": 73.8560, "details": "Open till late"},
 ]
 
 safe_taxi_stands = [
-    {"name": "Taxi Stand 1", "lat": 18.5210, "lon": 73.8550, "notes": " возле университета"},
-    {"name": "Taxi Stand 2", "lat": 18.5300, "lon": 73.8510, "notes": " возле вокзала"},
+    {"name": "Taxi Stand 1", "lat": 18.5210, "lon": 73.8550, "notes": " A"},
+    {"name": "Taxi Stand 2", "lat": 18.5300, "lon": 73.8510, "notes": " B"},
 ]
 
 # --- Simulate safe bus routes with actual coordinate paths ---
@@ -390,9 +451,74 @@ def safest_route_page():
 
     return render_template('safest_route.html', map_html=map_html if map_html else default_map_html, route_info=route_info)
 
+# Initialize the SOS detector
+sos_detector = SOSWordDetector()
+sos_detector.insert("Help")
+sos_detector.insert("Danger")
+sos_detector.insert("Emergency")
+sos_detector.insert("Save")
+sos_detector.insert("Fire")
+sos_detector.insert("Attack")
+
+sos_detector = create_sos_detector()
+is_sos_active = False  # make sure this is declared at global scope
+
+@app.route('/sos', methods=['POST'])
+def sos_check():
+    global is_sos_active
+    data = request.get_json()
+    spoken_word = data.get('spoken_word', '')
+
+    if spoken_word:
+        words = spoken_word.split()
+        for word in words:
+            clean_word = word.strip().lower().translate(str.maketrans('', '', string.punctuation))
+            if sos_detector.is_sos_word(clean_word):
+                location = get_current_location()
+                user_id = "woman_user_123"
+                gender = "female"
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                send_sos_alert(user_id, gender, location, clean_word)
+                is_sos_active = True
+
+                return jsonify({
+                    'message': f"SOS word '{clean_word}' detected and alert sent.",
+                    'is_sos_active': True,
+                    'details': {
+                        'trigger_word': clean_word,
+                        'location': location,
+                        'user_id': user_id,
+                        'gender': gender,
+                        'timestamp': timestamp
+                    }
+                })
+
+        if spoken_word.strip().lower() == 'stop' and is_sos_active:
+            is_sos_active = False
+            return jsonify({
+                'message': "SOS tracking stopped.",
+                'is_sos_active': False
+            })
+
+        return jsonify({
+            'message': f"No SOS action for phrase '{spoken_word}'.",
+            'is_sos_active': is_sos_active
+        })
+
+    else:
+        return jsonify({
+            'message': "No spoken word received.",
+            'is_sos_active': is_sos_active
+        })
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/sos')
+def sos_feature():
+    return render_template('sos_interface.html') 
 
 @app.route('/permissions')
 def permissions():
@@ -404,7 +530,7 @@ def features():
 
 @app.route('/emergency_contacts')
 def emergency_contact_page():
-    user_lat, user_lon = get_user_location()
+    user_lat, user_lon = get_current_location()
     nearest_police = find_nearest_locations(user_lat, user_lon, police_stations)
     nearest_help_centers = find_nearest_locations(user_lat, user_lon, women_help_centers)
     nearest_trusted = find_nearest_locations(user_lat, user_lon, trusted_contacts)
