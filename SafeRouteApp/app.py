@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,redirect, url_for, session
 import requests
 import geopy.distance
 import string
@@ -7,7 +7,11 @@ import folium
 from datetime import datetime
 import networkx as nx
 from datetime import datetime
+import winsound
 from folium.plugins import HeatMap
+from threading import Thread
+import RiskTimer
+import time
 import heapq  # Import the heapq module
 import json # Import the json module
 from trie_sos import (
@@ -179,8 +183,18 @@ police_stations = [
     {"name": "Swargate Police Station", "lat": 18.5033, "lon": 73.8601, "contact": "020-24453333"},
     {"name": "Kothrud Police Station", "lat": 18.5085, "lon": 73.8183, "contact": "020-25384444"},
     {"name": "Yerwada Police Station", "lat": 18.5670, "lon": 73.8778, "contact": "020-26685555"},
-    # ... more stations with contact numbers
+    {"name": "Khadki Police Station", "lat": 18.5654, "lon": 73.8451, "contact": "020-25876611"},
+    {"name": "Baner Police Station", "lat": 18.5590, "lon": 73.7890, "contact": "020-27299900"},
+    {"name": "Hinjewadi Police Station", "lat": 18.5912, "lon": 73.7381, "contact": "020-22985566"},
+    {"name": "Wakad Police Station", "lat": 18.5998, "lon": 73.7722, "contact": "020-27443322"},
+    {"name": "Bibwewadi Police Station", "lat": 18.4695, "lon": 73.8712, "contact": "020-24385588"},
+    {"name": "Hadapsar Police Station", "lat": 18.5082, "lon": 73.9250, "contact": "020-26887744"},
+    {"name": "Viman Nagar Police Chowky", "lat": 18.5663, "lon": 73.9132, "contact": "020-26789911"},
+    {"name": "Camp Police Station", "lat": 18.5167, "lon": 73.8780, "contact": "020-26334455"},
+    {"name": "Pimpri Police Station", "lat": 18.6272, "lon": 73.7999, "contact": "020-27452200"},
+    {"name": "Chinchwad Police Station", "lat": 18.6301, "lon": 73.8071, "contact": "020-27489966"}
 ]
+
 
 women_help_centers = [
     {"name": "Bharosa Cell", "lat": 18.5204, "lon": 73.8567},
@@ -511,6 +525,70 @@ def sos_check():
             'message': "No spoken word received.",
             'is_sos_active': is_sos_active
         })
+    
+    # Start the risk timer monitor in a background thread
+app.secret_key = "your_secret_key"
+
+@app.route('/risk')
+def risk_page():
+    return render_template('risk.html')
+
+@app.route('/set_timer', methods=['POST'])
+def set_timer():
+    destination = request.form['destination']
+    minutes = float(request.form['minutes'])
+
+    # Set the risk timer in the RiskTimer module
+    RiskTimer.set_risk_timer(destination, minutes)
+
+    # Store the destination in session if needed
+    session['destination'] = destination
+
+    # Redirect to the /challenge page after setting the timer
+    return redirect(url_for('challenge'))
+
+@app.route('/challenge')
+def challenge():
+    # Retrieve active challenge data from RiskTimer
+    data = RiskTimer.get_challenge_data()
+    if not data:
+        return "<h3 style='text-align:center;'>⏳ Challenge hasn't started yet. Wait and refresh. <a href='/risk'>Go Back</a></h3>"
+
+    if data.get('alert_sent'):
+        return "<h3 style='text-align:center;'>No active challenge. <a href='/risk'>Go Back</a></h3>"
+    # Auto alert trigger after 10 seconds (or based on your timeout)
+    if time.time() - data['timestamp'] > 10 and not data['alert_sent']:
+        send_alert(data['destination'])
+        data['alert_sent'] = True
+        return f"<h3 style='text-align:center;'>🚨 Timeout! Alert sent for {data['destination']}. <a href='/risk'>Go Back</a></h3>"
+
+    # Render the challenge page if everything is fine
+    return render_template('challenge.html', word=data['word'])
+
+@app.route('/submit_challenge', methods=['POST'])
+def submit_challenge():
+    user_input = request.form['user_input'].strip().lower()
+    data = RiskTimer.get_challenge_data()
+
+    if not data:
+        return "<h3 style='text-align:center;'>No challenge active. <a href='/risk'>Go Back</a></h3>"
+
+    correct_word = data['word'].lower()
+    destination = data['destination']
+
+    if user_input == correct_word:
+        return f"<h3 style='text-align:center;'>✅ Safety Confirmed for {destination}! <a href='/risk'>Go Back</a></h3>"
+    else:
+        if not data['alert_sent']:
+            send_alert(destination)
+            data['alert_sent'] = True
+        return f"<h3 style='text-align:center;'>🚨 Incorrect! Alert sent for {destination}. <a href='/risk'>Go Back</a></h3>"
+
+def send_alert(destination):
+    print(f"🚨 ALERT: No correct response for '{destination}'. Notifying emergency contacts & police.")
+    winsound.Beep(1000, 700)
+    winsound.Beep(1000, 700)
+
 
 @app.route('/')
 def home():
@@ -538,4 +616,7 @@ def emergency_contact_page():
     return render_template('emergency_map.html', map_html=map_html, emergency_contacts=emergency_contacts_list)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+     monitor_thread = Thread(target=RiskTimer.risk_timer_monitor, daemon=True)
+     monitor_thread.start()
+
+     app.run(debug=True)

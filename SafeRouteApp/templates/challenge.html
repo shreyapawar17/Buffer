@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Challenge</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow p-4 rounded">
+            <h2 class="text-center text-primary">🛡️ Safety Challenge</h2>
+            <p class="text-center">Type the following word within 10 seconds to confirm you're safe:</p>
+            <h3 class="text-center text-danger">{{ word }}</h3>
+
+            <form action="/submit_challenge" method="post">
+                <div class="mb-3">
+                    <label for="user_input" class="form-label">Enter the word</label>
+                    <input type="text" class="form-control" id="user_input" name="user_input" required>
+                </div>
+                <button type="submit" class="btn btn-danger w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
